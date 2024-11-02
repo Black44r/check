@@ -1,0 +1,136 @@
+/* index.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #121212;
+    color: #e0e0e0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-container {
+    background-color: #1e1e1e;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.login-image {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 20px;
+    border-radius: 50%;
+    border: 2px solid #e0e0e0;
+}
+
+h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #e0e0e0;
+}
+
+h1 .scanner-app {
+    color: #ecb349; /* Màu tím */
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-container h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #e0e0e0;
+}
+
+.login-container input[type="password"] {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #333;
+    outline:none;
+    color: #e0e0e0;
+}
+
+input[type="password"]::placeholder {
+    color: #888;
+}
+
+.login-container .button1 {
+    padding: 1em 2em;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    color: #000000;
+    transition: all 1000ms;
+    font-size: 15px;
+    position: relative;
+    overflow: hidden;
+    outline: 2px solid #ecb349;
+  }
+
+.login-container .button1:hover {
+    color: #ffffff;
+    transform: scale(1.1);
+    outline: 2px solid #ecb349;
+    box-shadow: 4px 5px 17px -4px #ecb349;
+  }
+
+.button1:before {
+    content: "";
+    position: absolute;
+    left: -50px;
+    top: 0;
+    width: 0;
+    height: 100%;
+    background-color: #ecb349;
+    transform: skewX(45deg);
+    z-index: -1;
+    transition: width 1000ms;
+  }
+  
+  .button1:hover::before {
+    width: 250%;
+  }
+
+.login-container .a {
+    margin-top: 10px;
+}
+
+.login-container .a a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.login-container .a a:hover {
+    text-decoration: underline;
+}
+
+.loop.cubes {
+    display: none; /* Hide the loader by default */
+}
+
+.loop.cubes .item {
+    width: 10px;
+    height: 10px;
+    background-color: #007bff;
+    margin: 5px;
+    animation: blink 1.4s infinite both;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+
