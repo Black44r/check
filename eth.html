@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ETH Finder</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            font-size: 39px;
+            margin-bottom: 20px;
+            color: red;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .form-group label {
+            font-size: 18px;
+            margin-right: 10px;
+        }
+        .form-group input {
+            width: 300px;
+            height: 20px;
+            border: 1px solid #000;
+        }
+        .buttons {
+            margin-top: 20px;
+        }
+        .buttons button {
+            font-size: 23px;
+            padding: 5px 10px;
+            border: 1px solid #000;
+            background-color: #fff;
+            cursor: pointer;
+            margin-right: 10px;
+            cursor: pointer;
+            height: 100%;
+            border-radius: 5px;
+            border: none;
+            padding: 10px;
+        }
+    #start {
+        background-color: green;
+    }
+    #stop {
+        background-color: red;
+    }
+    </style>
+</head>
+<body>
+    <h1>ETH FINDER</h1>
+    <div class="form-group">
+        <label for="address">Address :</label>
+        <input type="text" id="address" name="address" readonly>
+    </div>
+    <div class="form-group">
+        <label for="privateKey">Private key :</label>
+        <input type="text" id="privateKey" name="privateKey" readonly>
+    </div>
+    <div class="form-group">
+        <label for="balance">Balance :</label>
+        <input type="text" id="balance" name="balance" readonly>
+    </div>
+    <div class="buttons">
+        <button id="start">start</button>
+        <button id="stop">stop</button>
+    </div>
+
+    <!-- Add Web3 and Ethereum libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ethereumjs-wallet@1.0.1/dist/index.min.js"></script>
+    
+    <script>
+        let isRunning = false;
+        let searchInterval;
+        
+        // Connect to Ethereum network (you can change to mainnet)
+        const web3 = new Web3('https://cloudflare-eth.com');
+        
+        document.getElementById('start').addEventListener('click', startSearch);
+        document.getElementById('stop').addEventListener('click', stopSearch);
+
+        async function startSearch() {
+            if (isRunning) return;
+            isRunning = true;
+            
+            searchInterval = setInterval(async () => {
+                // Generate random private key
+                const privateKey = generateRandomPrivateKey();
+                document.getElementById('privateKey').value = privateKey;
+                
+                // Generate address from private key
+                const wallet = web3.eth.accounts.privateKeyToAccount(privateKey);
+                document.getElementById('address').value = wallet.address;
+                
+                // Check balance
+                try {
+                    const balance = await web3.eth.getBalance(wallet.address);
+                    const ethBalance = web3.utils.fromWei(balance, 'ether');
+                    document.getElementById('balance').value = ethBalance + ' ETH';
+                    
+                    // If balance is greater than 0, stop the search
+                    if (parseFloat(ethBalance) > 0) {
+                        stopSearch();
+                        alert('Found wallet with balance!');
+                    }
+                } catch (error) {
+                    console.error('Error checking balance:', error);
+                }
+            }, 100); // Check every 100ms
+        }
+
+        function stopSearch() {
+            isRunning = false;
+            clearInterval(searchInterval);
+        }
+
+        function generateRandomPrivateKey() {
+            const chars = '0123456789abcdef';
+            let privateKey = '0x';
+            for (let i = 0; i < 64; i++) {
+                privateKey += chars[Math.floor(Math.random() * chars.length)];
+            }
+            return privateKey;
+        }
+    </script>
+</body>
+</html>
